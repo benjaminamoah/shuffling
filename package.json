@@ -1,0 +1,24 @@
+{
+  "name": "cariprop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "client": "cd ../home && npm run start",
+    "all-servers-go": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "mongodb": "^3.3.0-beta2",
+    "mongoose": "^5.5.9",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.0"
+  }
+}
