@@ -297,4 +297,4 @@ app.post('/fetchmessages', function(req, res){
 //END OPERATIONS
 
 
-app.listen(PORT, () => console.log("You are connected at port ${PORT}"));
+app.listen(PORT, () => console.log("You are connected at port "+PORT));
