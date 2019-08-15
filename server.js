@@ -7,8 +7,8 @@ const app = express();
 ObjectId = require("mongodb").ObjectID;
 
 //mongodb connection and query
-const DB_URL = 'mongodb://localhost:27017/shuffle';
-//const DB_URL = 'mongodb+srv://bamoah:utopiamaya3@cluster0-xqp9f.mongodb.net/test?retryWrites=true&w=majority';
+//const DB_URL = 'mongodb://localhost:27017/shuffle';
+const DB_URL = 'mongodb+srv://bamoah:utopiamaya3@cluster0-xqp9f.mongodb.net/test?retryWrites=true&w=majority';
 const DB = 'shuffle';
 
 app.use(express.static('public'));
