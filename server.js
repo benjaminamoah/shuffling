@@ -296,5 +296,10 @@ app.post('/fetchmessages', function(req, res){
 
 //END OPERATIONS
 
+app.use("/", express.static('public'));
+
+app.get('*', function(req, res) {
+    res.sendFile(path.join(__dirname + '/public/index.html'));
+});
 
 app.listen(PORT, () => console.log("You are connected at port "+PORT));
