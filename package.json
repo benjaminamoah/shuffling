@@ -6,7 +6,9 @@
   "scripts": {
     "server": "nodemon server.js",
     "client": "cd ../home && npm run start",
-    "all-servers-go": "concurrently \"npm run server\" \"npm run client\""
+    "all-servers-go": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "webpack -p --progress --profile --colors && node server",
+    "start:dev": "node server"
   },
   "keywords": [],
   "author": "",
