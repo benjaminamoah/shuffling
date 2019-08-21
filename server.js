@@ -273,7 +273,7 @@ app.post('/fetchmessages', function(req, res){
                         let reversed_results = result[0].messages.reverse().map(item => item);
                         res.json({ 'response_msg': "Here are the messages!", "messages": reversed_results });
                     }else{
-                        res.json({ 'response_msg': "Here are the messages!", "messages": [{message: "still waiting..."}] });
+                        res.json({ 'response_msg': "Here are the messages!", "messages": [{name: "", message: "still waiting..."}] });
                     }
                 }
             );
