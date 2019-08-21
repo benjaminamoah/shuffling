@@ -194,17 +194,16 @@ app.post('/addplayer', function(req, res){
             const new_player = {
                 id: new ObjectId( id ),
                 name: name,
-                credit: 0.05,
-                votes: [],
+                status: "active",
                 time: new Date().getTime()
             }
             
             const new_prop = {
                 //add propping
-                status: "waiting",
+                type: "",
+                status: "active",
                 players: [ new_player ],
                 numberofplayers: 1,
-                winner: "",
                 messages: [],
                 time: new Date().getTime()
             }
@@ -213,7 +212,7 @@ app.post('/addplayer', function(req, res){
             //db.collection("proppings").findOneAndUpdate({ $and: [ { numberofplayers: { $lt: 10 } }, {players: { $not: { $elemMatch: { id: user_id } } } } ] }, { $push: { players: new_player }, $inc: { numberofplayers: 1 } },
         
             const user_id = new ObjectId( id );
-            db.collection("proppings").findOneAndUpdate({ $and: [ { numberofplayers: { $lt: 10 } },  {players: { $not: { $elemMatch: { id: user_id } } } } ] }, { $push: { players: new_player }, $inc: { numberofplayers: 1 } },
+            db.collection("proppings").findOneAndUpdate({ $and: [ { status: "active" }, { numberofplayers: { $lt: 10 } },  {players: { $not: { $elemMatch: { id: user_id } } } } ] }, { $push: { players: new_player }, $inc: { numberofplayers: 1 } },
                 function(err, res1){ 
                     if(res1.value === null){
                         db.collection("proppings").insertOne( new_prop,
@@ -283,15 +282,37 @@ app.post('/fetchmessages', function(req, res){
          
 });
 
-//OPERATIONS
-//5d35b03ccb26915c14a12fe0
-//5d35b1e5ad69273edcc90588
-//5d35b3726788d075f00fb55e
-//5d3f20f738518a657c566590
-//5d3f21427e8761806c33d6db
-//5d3f2151b87d0a91e09480dd
-//5d3f216008a61f6bd84f2cfc
-//add player
+
+
+app.post('/leftconversation', function(req, res){
+    const id = req.body.id;
+    const propping_id = req.body.propping_id;
+
+    //query database
+    mongoclient.connect(DB_URL,
+        { useNewUrlParser: true },
+        function(err, client){
+            if(err) throw err;
+    
+            const db = client.db(DB);
+    
+
+            const user_id = new ObjectId( id );
+            db.collection("proppings").findOneAndUpdate({ $and: [ { _id: new ObjectId( propping_id ) }, { "players.id": user_id } ] }, { "players.$.status": "left conversation" },
+                function(err, res1){ 
+                    if(res1.value === null){
+                        db.collection("proppings").findOneAndUpdate( { $and: [ { _id: new ObjectId( propping_id ) }, { players: { $not: { $elemMatch: { "players.$.status": "active" } } } } ] }, { status: "inactive" },
+                            function(err, result1){
+                            if(err) throw err; 
+                            res.json({ 'response_msg': 'Left conversation!' });
+                        })
+                    }else{
+                        res.json({ 'response_msg': 'Left conversation!' });
+                    }
+                }
+            );    
+        });
+});
 
 
 //END OPERATIONS
