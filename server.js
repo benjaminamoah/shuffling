@@ -284,7 +284,7 @@ app.post('/fetchmessages', function(req, res){
 
 
 
-app.post('/leftconversation', function(req, res){
+app.post('/leaveconversation', function(req, res){
     const id = req.body.id;
     const propping_id = req.body.propping_id;
 
