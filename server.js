@@ -298,13 +298,15 @@ app.post('/leaveconversation', function(req, res){
     
 
             const user_id = new ObjectId( id );
-            db.collection("proppings").findOneAndUpdate({ $and: [ { _id: new ObjectId( propping_id ) }, { "players.id": user_id } ] }, { "players.$.status": "left conversation" },
+            db.collection("proppings").findOneAndUpdate({ $and: [ { _id: new ObjectId( propping_id ) }, { "players.id": user_id } ] }, { $set: { "players.$.status": "left conversation" } }, { new: true },
                 function(err, res1){ 
+                    console.log("Res1: "+JSON.stringify(res1));
                     if(res1.value !== null){
-                        db.collection("proppings").findOneAndUpdate( { $and: [ { _id: new ObjectId( propping_id ) }, { players: { $not: { $elemMatch: { "players.$.status": "active" } } } } ] }, { status: "inactive" },
+                        db.collection("proppings").findOneAndUpdate( { $and: [ { _id: new ObjectId( propping_id ) }, { players: { $not: { $elemMatch: { "players.$.status": "active" } } } } ] }, { $set: { status: "inactive" } }, { new: true },
                             function(err, result1){
+                                console.log("Result1: "+JSON.stringify(result1));
                             if(err) throw err; 
-                            res.json({ 'response_msg': 'Left conversation!' });
+                                res.json({ 'response_msg': 'Left conversation!' });
                         })
                     }else{
                         res.json({ 'response_msg': 'Left conversation!' });
