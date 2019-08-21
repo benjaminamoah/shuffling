@@ -300,7 +300,7 @@ app.post('/leaveconversation', function(req, res){
             const user_id = new ObjectId( id );
             db.collection("proppings").findOneAndUpdate({ $and: [ { _id: new ObjectId( propping_id ) }, { "players.id": user_id } ] }, { "players.$.status": "left conversation" },
                 function(err, res1){ 
-                    if(res1.value === null){
+                    if(res1.value !== null){
                         db.collection("proppings").findOneAndUpdate( { $and: [ { _id: new ObjectId( propping_id ) }, { players: { $not: { $elemMatch: { "players.$.status": "active" } } } } ] }, { status: "inactive" },
                             function(err, result1){
                             if(err) throw err; 
