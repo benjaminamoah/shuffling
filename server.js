@@ -21,7 +21,6 @@ app.use(bodyParser.urlencoded({
 
 
 app.post('/auth', function(req, res){
-    //var data = req.read();
     let email = req.body.email;
     let password = req.body.password;
 
@@ -282,7 +281,6 @@ app.post('/fetchmessages', function(req, res){
     });    
          
 });
-
 
 
 app.post('/leaveconversation', function(req, res){
